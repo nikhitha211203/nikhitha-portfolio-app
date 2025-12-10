@@ -7,23 +7,40 @@ const Contact = require("./models/Contact");
 
 const app = express();
 app.use(cors());
+// ===============================
+//  Middleware
+// ===============================
 app.use(express.json());
+app.use(require('cookie-parser')());
 
-// MongoDB Connect
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected Successfully!"))
-.catch(err => console.log("MongoDB Error:", err));
+// ===============================
+//  Routes
+// ===============================
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/skills', require('./routes/skillRoutes'));
+app.use('/api/about', require('./routes/aboutRoutes'));
+app.use('/api/contact', require('./routes/contactRoutes'));
 
-// Contact API Route
-app.post("/contact", async (req, res) => {
-  try {
-    const contactData = new Contact(req.body);
-    await contactData.save();
-    res.json({ success: true, message: "Message Saved Successfully!" });
-  } catch (error) {
-    res.json({ success: false, message: "Error saving message!" });
-  }
+// ===============================
+//  MongoDB Connectcd
+// ===============================
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected Successfully!"))
+  .catch((err) => console.log("MongoDB Error:", err));
+
+
+// ===============================
+//  Test Route (GET)
+// ===============================
+app.get("/", (req, res) => {
+  res.send("Portfolio Server Running ✔");
 });
 
-const PORT = 5000;
+// ===============================
+//  Start Server
+// ===============================
+// Use Render PORT or local 5000
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
