@@ -1,4 +1,18 @@
 {
+  "name": "portfolio-app",
+  "version": "1.0.0",
+  "description": "Portfolio App Monorepo",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "cd server && npm start",
+    "client": "cd client && npm start",
+    "install-all": "cd client && npm install && cd ../server && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run install-all && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "axios": "^1.13.2",
     "react-router-dom": "^7.9.6"

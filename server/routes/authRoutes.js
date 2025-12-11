@@ -36,8 +36,12 @@ router.post('/login', async (req, res) => {
                 if (err) throw err;
                 res.cookie('token', token, {
                     httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
-                    sameSite: 'strict'
+                    // If true, cookie is only sent over HTTPS. Required for sameSite: 'none'.
+                    // On Render, traffic is HTTPS.
+                    secure: true,
+                    // 'none' allows cross-site (Vercel -> Render) cookies.
+                    sameSite: 'none',
+                    maxAge: 24 * 60 * 60 * 1000 // 1 day
                 });
                 res.json({ token });
             }
