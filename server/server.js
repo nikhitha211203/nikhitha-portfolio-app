@@ -74,23 +74,11 @@ mongoose
   .catch((err) => console.error("MongoDB Error:", err));
 
 // ===============================
-//  Serve React ONLY in production
+//  Root Route (Health Check)
 // ===============================
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.join(__dirname, "../client/build/index.html"),
-      (err) => {
-        if (err) {
-          console.error("Error serving React build:", err);
-          res.status(500).send(err);
-        }
-      }
-    );
-  });
-}
+app.get("/", (req, res) => {
+  res.send("API is running successfully!");
+});
 
 // ===============================
 //  Start Server
