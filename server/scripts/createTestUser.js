@@ -21,7 +21,11 @@ async function createUser() {
   const existing = await User.findOne({ email });
   if (existing) {
     console.log('User already exists:', email);
-    console.log('To override, remove the user from the DB or change TEST_USER_EMAIL in .env');
+    console.log('Updating password...');
+    const salt = await bcrypt.genSalt(10);
+    existing.password = await bcrypt.hash(password, salt);
+    await existing.save();
+    console.log('Password updated successfully.');
     process.exit(0);
   }
 
