@@ -1,0 +1,121 @@
+.about-container {
+    background-color: #0f172a;
+    color: #fff;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #F8FAFC;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60%;
+    height: 4px;
+    background: #3B82F6;
+    border-radius: 2px;
+}
+
+.profile-summary {
+    display: flex;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    align-items: center;
+    background: #1E293B;
+    padding: 2rem;
+    border-radius: 16px;
+}
+
+.about-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #3B82F6;
+}
+
+.summary-text h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.role {
+    color: #60A5FA;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.bio {
+    color: #94A3B8;
+    line-height: 1.6;
+}
+
+.exp-edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.section-col h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #A78BFA;
+}
+
+.timeline-card {
+    background: #1E293B;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #3B82F6;
+}
+
+.timeline-card h4 {
+    margin-bottom: 0.5rem;
+    color: #F1F5F9;
+}
+
+.company {
+    display: block;
+    color: #94A3B8;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.duration {
+    display: block;
+    font-size: 0.9rem;
+    color: #64748B;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-card p {
+    color: #CBD5E1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .profile-summary {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .exp-edu-grid {
+        grid-template-columns: 1fr;
+    }
+}

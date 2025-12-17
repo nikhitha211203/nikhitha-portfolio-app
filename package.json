@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Portfolio App Monorepo",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "cd server && npm start",
     "server": "cd server && npm start",
     "client": "cd client && npm start",
     "install-all": "cd client && npm install && cd ../server && npm install",
