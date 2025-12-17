@@ -65,26 +65,14 @@ app.use("/api/projects", require("./routes/projectRoutes"));
 app.use("/api/skills", require("./routes/skillRoutes"));
 app.use("/api/about", require("./routes/aboutRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
-app.use(cookieParser());
 
 // ===============================
-//  API Routes
-// ===============================
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/projects", require("./routes/projectRoutes"));
-app.use("/api/skills", require("./routes/skillRoutes"));
-app.use("/api/about", require("./routes/aboutRoutes"));
-app.use("/api/contact", require("./routes/contactRoutes"));
-
-// ===============================
-//  MongoDB Connection
 //  MongoDB Connection
 // ===============================
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected Successfully!"))
   .catch((err) => console.error("MongoDB Error:", err));
-  .catch ((err) => console.error("MongoDB Error:", err));
 
 // ===============================
 //  Root Route (Health Check)
@@ -97,9 +85,6 @@ app.get("/", (req, res) => {
 //  Start Server
 // ===============================
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
-});
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
