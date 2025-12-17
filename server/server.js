@@ -82,6 +82,13 @@ app.get("/", (req, res) => {
 });
 
 // ===============================
+//  Test Route
+// ===============================
+app.get("/api/test", (req, res) => {
+  res.json({ message: "Backend is connected!" });
+});
+
+// ===============================
 //  Start Server
 // ===============================
 const PORT = process.env.PORT || 5000;

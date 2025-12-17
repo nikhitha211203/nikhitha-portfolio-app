@@ -7,9 +7,9 @@ const Footer = () => {
                 <p className="mb-0">© {new Date().getFullYear()} Nikhitha. All Rights Reserved.</p>
                 <div className="social-icons mt-2">
                     {/* Add actual social links here */}
-                    <a href="#" className="text-white mx-2">GitHub</a>
-                    <a href="#" className="text-white mx-2">LinkedIn</a>
-                    <a href="#" className="text-white mx-2">Twitter</a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">GitHub</a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">LinkedIn</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">Twitter</a>
                 </div>
             </div>
         </footer>
