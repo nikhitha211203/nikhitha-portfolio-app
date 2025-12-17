@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node seedAdmin.js && node server.js",
     "create-test-user": "node scripts/createTestUser.js",
     "dev": "nodemon server.js"
   },
