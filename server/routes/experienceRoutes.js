@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getExperiences, createExperience, deleteExperience, getEducation, createEducation, deleteEducation } = require("../controllers/experienceController");
-const { protect } = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
 // Experience
 router.get("/experience", getExperiences);

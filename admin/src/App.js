@@ -4,6 +4,9 @@ import axios from 'axios';
 import './App.css';
 import Navbar from './components/Navbar';
 import ProjectManager from './pages/ProjectManager';
+import SkillManager from './pages/SkillManager';
+import ExperienceManager from './pages/ExperienceManager';
+import AboutManager from './pages/AboutManager';
 
 // Simple Login Component
 const Login = ({ setToken }) => {
@@ -80,11 +83,7 @@ const Dashboard = ({ setToken }) => {
   );
 };
 
-import SkillManager from './pages/SkillManager';
-import ExperienceManager from './pages/ExperienceManager';
-import AboutManager from './pages/AboutManager';
 
-// ... (Login and Dashboard components remain) ...
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));

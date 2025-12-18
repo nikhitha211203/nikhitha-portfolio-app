@@ -44,8 +44,8 @@ function About() {
           {profile.email && <p><strong>Email:</strong> {profile.email}</p>}
           {profile.phone && <p><strong>Phone:</strong> {profile.phone}</p>}
         </div>
-        </div>
       </div>
+
 
       <hr className="my-5" />
 
