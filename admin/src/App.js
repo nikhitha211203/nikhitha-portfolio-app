@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
+import Navbar from './components/Navbar';
+import ProjectManager from './pages/ProjectManager';
 
 // Simple Login Component
 const Login = ({ setToken }) => {
@@ -12,7 +14,8 @@ const Login = ({ setToken }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/auth/login', { email, password });
+      const API_URL = process.env.REACT_APP_API_URL || 'https://nikhitha-portfolio-app.onrender.com';
+      const res = await axios.post(`${API_URL}/api/auth/login`, { email, password });
       setToken(res.data.token);
       localStorage.setItem('token', res.data.token);
     } catch (err) {
@@ -34,30 +37,54 @@ const Login = ({ setToken }) => {
   );
 };
 
-// Simple Dashboard Component
-const Dashboard = ({ token, setToken }) => {
-  const handleLogout = () => {
-    setToken(null);
-    localStorage.removeItem('token');
-  };
-
+// Dashboard Component
+const Dashboard = ({ setToken }) => {
   return (
-    <div className="dashboard">
-      <header>
-        <h1>Admin Dashboard</h1>
-        <button onClick={handleLogout}>Logout</button>
-      </header>
-      <main>
-        <p>Welcome to the Admin Panel. You can manage your portfolio here.</p>
-        <div className="cards">
-          <div className="card"><h3>Projects</h3><p>Manage Projects</p></div>
-          <div className="card"><h3>Skills</h3><p>Manage Skills</p></div>
-          <div className="card"><h3>Experience</h3><p>Manage Experience</p></div>
-        </div>
-      </main>
+    <div>
+      <Navbar setToken={setToken} />
+      <div className="dashboard">
+        <header>
+          <h1>Admin Dashboard</h1>
+        </header>
+        <main>
+          <p>Welcome to the Admin Panel. You can manage your portfolio here.</p>
+          <div className="cards">
+            <div className="card">
+              <Link to="/projects">
+                <h3>Projects</h3>
+                <p>Manage Projects</p>
+              </Link>
+            </div>
+            <div className="card">
+              <Link to="/skills">
+                <h3>Skills</h3>
+                <p>Manage Skills</p>
+              </Link>
+            </div>
+            <div className="card">
+              <Link to="/experience">
+                <h3>Experience</h3>
+                <p>Manage Experience</p>
+              </Link>
+            </div>
+            <div className="card">
+              <Link to="/about">
+                <h3>About</h3>
+                <p>Manage About</p>
+              </Link>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
+
+import SkillManager from './pages/SkillManager';
+import ExperienceManager from './pages/ExperienceManager';
+import AboutManager from './pages/AboutManager';
+
+// ... (Login and Dashboard components remain) ...
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -66,7 +93,11 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/login" element={!token ? <Login setToken={setToken} /> : <Navigate to="/" />} />
-        <Route path="/" element={token ? <Dashboard token={token} setToken={setToken} /> : <Navigate to="/login" />} />
+        <Route path="/" element={token ? <Dashboard setToken={setToken} /> : <Navigate to="/login" />} />
+        <Route path="/projects" element={token ? <ProjectManager setToken={setToken} /> : <Navigate to="/login" />} />
+        <Route path="/skills" element={token ? <SkillManager setToken={setToken} /> : <Navigate to="/login" />} />
+        <Route path="/experience" element={token ? <ExperienceManager setToken={setToken} /> : <Navigate to="/login" />} />
+        <Route path="/about" element={token ? <AboutManager setToken={setToken} /> : <Navigate to="/login" />} />
       </Routes>
     </div>
   );

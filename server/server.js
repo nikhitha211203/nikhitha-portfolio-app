@@ -66,6 +66,7 @@ app.use("/api/projects", require("./routes/projectRoutes"));
 app.use("/api/skills", require("./routes/skillRoutes"));
 app.use("/api/about", require("./routes/aboutRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
+app.use("/api", require("./routes/experienceRoutes"));
 
 // ===============================
 //  MongoDB Connection

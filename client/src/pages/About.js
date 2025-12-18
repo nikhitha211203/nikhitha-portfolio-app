@@ -12,8 +12,8 @@ function About() {
       try {
         const [aboutRes, eduRes, expRes] = await Promise.all([
           axios.get("/api/about"),
-          axios.get("/api/experience/education"),
-          axios.get("/api/experience/experience")
+          axios.get("/api/education"),
+          axios.get("/api/experience")
         ]);
         setProfile(aboutRes.data || {});
         setEducation(eduRes.data);
@@ -33,13 +33,17 @@ function About() {
     <div className="container mt-5">
       <div className="row">
         <div className="col-md-4 text-center">
-          <img src={profile.profileImage || "https://i.pravatar.cc/300"} alt="Profile" className="img-fluid rounded-circle mb-3" style={{ maxWidth: 250 }} />
+          <img src={profile.profileUrl || "https://i.pravatar.cc/300"} alt="Profile" className="img-fluid rounded-circle mb-3" style={{ maxWidth: 250, height: 250, objectFit: 'cover' }} />
+          {profile.resumeUrl && <div className="mt-3"><a href={profile.resumeUrl} target="_blank" rel="noreferrer" className="btn btn-success">Download Resume</a></div>}
         </div>
         <div className="col-md-8">
           <h2>About Me</h2>
+          {profile.role && <h4 className="text-muted">{profile.role}</h4>}
           <p className="lead">{profile.bio}</p>
 
           {profile.email && <p><strong>Email:</strong> {profile.email}</p>}
+          {profile.phone && <p><strong>Phone:</strong> {profile.phone}</p>}
+        </div>
         </div>
       </div>
 
@@ -71,7 +75,7 @@ function About() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

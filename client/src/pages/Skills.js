@@ -18,15 +18,15 @@ function Skills() {
           {skills.map(s => (
             <div key={s._id} className="mb-3">
               <div className="d-flex justify-content-between">
-                <span>{s.name} <small className="text-muted">({s.level})</small></span>
-                <span>{s.progress}%</span>
+                <span>{s.name} <small className="text-muted">({s.category})</small></span>
+                <span>{s.level}%</span>
               </div>
               <div className="progress">
                 <div
                   className="progress-bar"
                   role="progressbar"
-                  style={{ width: `${s.progress}%` }}
-                  aria-valuenow={s.progress}
+                  style={{ width: `${s.level}%` }}
+                  aria-valuenow={s.level}
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>

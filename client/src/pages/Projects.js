@@ -26,16 +26,19 @@ function Projects() {
         {projects.map(p => (
           <div className="col-md-4 mb-4" key={p._id}>
             <div className="card h-100 shadow-sm">
-              {p.image ? (
-                <img src={p.image} className="card-img-top" alt={p.title} style={{ height: 200, objectFit: 'cover' }} />
+              {p.imageUrl ? (
+                <img src={p.imageUrl} className="card-img-top" alt={p.title} style={{ height: 200, objectFit: 'cover' }} />
               ) : (
                 <div style={{ height: 200, background: '#eee' }}></div>
               )}
               <div className="card-body">
                 <h5 className="card-title">{p.title}</h5>
                 <p className="card-text">{p.description}</p>
-                <p><strong>Stack:</strong> {p.techStack.join(", ")}</p>
-                {p.link && <a href={p.link} target="_blank" rel="noreferrer" className="btn btn-sm btn-primary">View Project</a>}
+                <p><strong>Stack:</strong> {p.techStack && p.techStack.join(", ")}</p>
+                <div className="d-flex gap-2">
+                  {p.githubLink && <a href={p.githubLink} target="_blank" rel="noreferrer" className="btn btn-sm btn-dark">GitHub</a>}
+                  {p.liveLink && <a href={p.liveLink} target="_blank" rel="noreferrer" className="btn btn-sm btn-primary">Live Demo</a>}
+                </div>
               </div>
             </div>
           </div>
