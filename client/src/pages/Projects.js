@@ -6,7 +6,8 @@ function Projects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("/api/projects")
+    const API_BASE = process.env.NODE_ENV === 'production' ? 'https://nikhitha-portfolio-app.onrender.com' : '';
+    axios.get(`${API_BASE}/api/projects`)
       .then(res => {
         setProjects(res.data);
         setLoading(false);

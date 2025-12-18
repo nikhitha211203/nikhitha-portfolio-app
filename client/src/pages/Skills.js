@@ -5,7 +5,8 @@ function Skills() {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/skills")
+    const API_BASE = process.env.NODE_ENV === 'production' ? 'https://nikhitha-portfolio-app.onrender.com' : '';
+    axios.get(`${API_BASE}/api/skills`)
       .then(res => setSkills(res.data))
       .catch(err => console.error(err));
   }, []);

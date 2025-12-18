@@ -10,10 +10,11 @@ function About() {
   useEffect(() => {
     const getData = async () => {
       try {
+        const API_BASE = process.env.NODE_ENV === 'production' ? 'https://nikhitha-portfolio-app.onrender.com' : '';
         const [aboutRes, eduRes, expRes] = await Promise.all([
-          axios.get("/api/about"),
-          axios.get("/api/education"),
-          axios.get("/api/experience")
+          axios.get(`${API_BASE}/api/about`),
+          axios.get(`${API_BASE}/api/education`),
+          axios.get(`${API_BASE}/api/experience`)
         ]);
         setProfile(aboutRes.data || {});
         setEducation(eduRes.data);
