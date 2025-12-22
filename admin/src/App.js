@@ -7,6 +7,7 @@ import ProjectManager from './pages/ProjectManager';
 import SkillManager from './pages/SkillManager';
 import ExperienceManager from './pages/ExperienceManager';
 import AboutManager from './pages/AboutManager';
+import MessagesManager from './pages/MessagesManager';
 
 // Simple Login Component
 const Login = ({ setToken }) => {
@@ -97,6 +98,7 @@ function App() {
         <Route path="/skills" element={token ? <SkillManager setToken={setToken} /> : <Navigate to="/login" />} />
         <Route path="/experience" element={token ? <ExperienceManager setToken={setToken} /> : <Navigate to="/login" />} />
         <Route path="/about" element={token ? <AboutManager setToken={setToken} /> : <Navigate to="/login" />} />
+        <Route path="/messages" element={token ? <MessagesManager setToken={setToken} /> : <Navigate to="/login" />} />
       </Routes>
     </div>
   );

@@ -19,6 +19,7 @@ const Navbar = ({ setToken }) => {
                 <Link to="/skills">Skills</Link>
                 <Link to="/experience">Experience</Link>
                 <Link to="/about">About</Link>
+                <Link to="/messages">Messages</Link>
                 <button onClick={handleLogout} className="logout-btn">Logout</button>
             </div>
         </nav>

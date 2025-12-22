@@ -5,6 +5,8 @@ import Navbar from '../components/Navbar';
 const ExperienceManager = ({ setToken }) => {
     const [experiences, setExperiences] = useState([]);
     const [education, setEducation] = useState([]);
+    const [editingExpId, setEditingExpId] = useState(null);
+    const [editingEduId, setEditingEduId] = useState(null);
 
     // Experience Form
     const [expForm, setExpForm] = useState({
@@ -47,11 +49,27 @@ const ExperienceManager = ({ setToken }) => {
         e.preventDefault();
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            await axios.post(`${API_URL}/api/experience`, expForm, config);
-            setMessage('Experience Added');
+            if (editingExpId) {
+                await axios.put(`${API_URL}/api/experience/${editingExpId}`, expForm, config);
+                setMessage('Experience Updated');
+                setEditingExpId(null);
+            } else {
+                await axios.post(`${API_URL}/api/experience`, expForm, config);
+                setMessage('Experience Added');
+            }
             setExpForm({ jobTitle: '', company: '', duration: '', description: '' });
             fetchData();
-        } catch (err) { setMessage('Error adding experience'); }
+        } catch (err) { setMessage('Error saving experience'); }
+    };
+
+    const handleEditExp = (exp) => {
+        setEditingExpId(exp._id);
+        setExpForm({ jobTitle: exp.jobTitle, company: exp.company, duration: exp.duration, description: exp.description });
+    };
+
+    const cancelEditExp = () => {
+        setEditingExpId(null);
+        setExpForm({ jobTitle: '', company: '', duration: '', description: '' });
     };
 
     const deleteExp = async (id) => {
@@ -71,11 +89,27 @@ const ExperienceManager = ({ setToken }) => {
         e.preventDefault();
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            await axios.post(`${API_URL}/api/education`, eduForm, config);
-            setMessage('Education Added');
+            if (editingEduId) {
+                await axios.put(`${API_URL}/api/education/${editingEduId}`, eduForm, config);
+                setMessage('Education Updated');
+                setEditingEduId(null);
+            } else {
+                await axios.post(`${API_URL}/api/education`, eduForm, config);
+                setMessage('Education Added');
+            }
             setEduForm({ school: '', degree: '', duration: '', description: '' });
             fetchData();
-        } catch (err) { setMessage('Error adding education'); }
+        } catch (err) { setMessage('Error saving education'); }
+    };
+
+    const handleEditEdu = (edu) => {
+        setEditingEduId(edu._id);
+        setEduForm({ school: edu.school, degree: edu.degree, duration: edu.duration, description: edu.description });
+    };
+
+    const cancelEditEdu = () => {
+        setEditingEduId(null);
+        setEduForm({ school: '', degree: '', duration: '', description: '' });
     };
 
     const deleteEdu = async (id) => {
@@ -103,14 +137,18 @@ const ExperienceManager = ({ setToken }) => {
                         <div className="form-group"><label>Company</label><input type="text" name="company" value={expForm.company} onChange={handleExpChange} required /></div>
                         <div className="form-group"><label>Duration</label><input type="text" name="duration" value={expForm.duration} onChange={handleExpChange} placeholder="e.g. Jan 2020 - Present" required /></div>
                         <div className="form-group"><label>Description</label><textarea name="description" value={expForm.description} onChange={handleExpChange} /></div>
-                        <button type="submit" className="btn-primary">Add Experience</button>
+                        <button type="submit" className="btn-primary">{editingExpId ? 'Update Experience' : 'Add Experience'}</button>
+                        {editingExpId && <button type="button" onClick={cancelEditExp} className="btn-danger">Cancel Edit</button>}
                     </form>
 
                     <div className="item-list">
                         {experiences.map(exp => (
                             <div key={exp._id} className="item-card">
                                 <div><h4>{exp.jobTitle} at {exp.company}</h4><p>{exp.duration}</p></div>
-                                <button onClick={() => deleteExp(exp._id)} className="btn-danger">Delete</button>
+                                <div>
+                                    <button onClick={() => handleEditExp(exp)} className="btn-edit">Edit</button>
+                                    <button onClick={() => deleteExp(exp._id)} className="btn-danger">Delete</button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -126,14 +164,18 @@ const ExperienceManager = ({ setToken }) => {
                         <div className="form-group"><label>Degree</label><input type="text" name="degree" value={eduForm.degree} onChange={handleEduChange} required /></div>
                         <div className="form-group"><label>Duration</label><input type="text" name="duration" value={eduForm.duration} onChange={handleEduChange} required /></div>
                         <div className="form-group"><label>Description</label><textarea name="description" value={eduForm.description} onChange={handleEduChange} /></div>
-                        <button type="submit" className="btn-primary">Add Education</button>
+                        <button type="submit" className="btn-primary">{editingEduId ? 'Update Education' : 'Add Education'}</button>
+                        {editingEduId && <button type="button" onClick={cancelEditEdu} className="btn-danger">Cancel Edit</button>}
                     </form>
 
                     <div className="item-list">
                         {education.map(edu => (
                             <div key={edu._id} className="item-card">
                                 <div><h4>{edu.degree} - {edu.school}</h4><p>{edu.duration}</p></div>
-                                <button onClick={() => deleteEdu(edu._id)} className="btn-danger">Delete</button>
+                                <div>
+                                    <button onClick={() => handleEditEdu(edu)} className="btn-edit">Edit</button>
+                                    <button onClick={() => deleteEdu(edu._id)} className="btn-danger">Delete</button>
+                                </div>
                             </div>
                         ))}
                     </div>
