@@ -111,15 +111,25 @@ const Dashboard = () => {
   );
 };
 
+// Dashboard Component - No changes needed here directly
+
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <div className="App">
       {token ? (
         <>
-          <Navbar setToken={setToken} />
-          <div className="main-content">
+          <button className={`toggle-btn ${isSidebarOpen ? 'shifted' : ''}`} onClick={toggleSidebar}>
+            <i className={`bi ${isSidebarOpen ? 'bi-x-lg' : 'bi-list'}`}></i>
+          </button>
+          <Navbar setToken={setToken} isOpen={isSidebarOpen} />
+          <div className={`main-content ${!isSidebarOpen ? 'expanded' : ''}`}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/projects" element={<ProjectManager />} />

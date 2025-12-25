@@ -5,14 +5,22 @@
   background-image:
     radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.25) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.25) 0%, transparent 40%);
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
 }
 
 .main-content {
   flex: 1;
   padding: 2rem;
   margin-left: 260px;
-  /* Width of sidebar */
   width: calc(100% - 260px);
+  transition: all 0.3s ease;
+  /* Smooth transition */
+}
+
+.main-content.expanded {
+  margin-left: 0;
+  width: 100%;
 }
 
 /* Navbar / Sidebar */
@@ -26,8 +34,34 @@
   flex-direction: column;
   padding: 2rem;
   z-index: 1000;
+  transition: transform 0.3s ease;
 }
 
+.navbar.collapsed {
+  transform: translateX(-100%);
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+}
+
+.toggle-btn.shifted {
+  left: 280px;
+  /* Move button when sidebar is open if desired, or keep fixed */
+}
+
+/* Nav Brand */
 .nav-brand {
   font-size: 1.5rem;
   font-weight: 800;
@@ -36,6 +70,8 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  margin-top: 2rem;
+  /* Space for toggle button if inside */
 }
 
 .nav-links {
@@ -159,6 +195,16 @@
   transition: border-color 0.3s;
 }
 
+/* Specific fix for inputs in flex containers (ThemeManager) */
+.d-flex .login-input {
+  margin-bottom: 0;
+  /* Remove bottom margin when in flex row */
+  flex: 1;
+  /* Allow it to take available space but not force 100% width of parent if parent is constrained */
+  min-width: 0;
+  /* Prevent flex item overflow */
+}
+
 .login-input:focus {
   border-color: var(--primary);
   background: rgba(15, 23, 42, 0.5);
@@ -183,7 +229,8 @@
 
 /* Forms & Tables */
 .manager-container {
-  max-width: 1200px;
+  max-width: 100%;
+  /* Allow full width but constrained by padding */
   margin: 0 auto;
 }
 

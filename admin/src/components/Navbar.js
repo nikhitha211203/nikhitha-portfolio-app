@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-const Navbar = ({ setToken }) => {
+const Navbar = ({ setToken, isOpen }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -14,7 +14,7 @@ const Navbar = ({ setToken }) => {
     const isActive = (path) => location.pathname === path ? 'active' : '';
 
     return (
-        <nav className="navbar glass-panel">
+        <nav className={`navbar glass-panel ${!isOpen ? 'collapsed' : ''}`}>
             <div className="nav-brand">Admin Panel</div>
             <div className="nav-links">
                 <Link to="/" className={isActive('/')}>
@@ -38,6 +38,12 @@ const Navbar = ({ setToken }) => {
                 <Link to="/theme" className={isActive('/theme')}>
                     <i className="bi bi-palette"></i> Theme
                 </Link>
+
+                <div className="mt-3 pt-3 border-top border-secondary">
+                    <a href="https://nikhitha-portfolio-tan.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        <i className="bi bi-globe"></i> View Live Site
+                    </a>
+                </div>
 
                 <button onClick={handleLogout} className="logout-btn">
                     <i className="bi bi-box-arrow-left"></i> Logout

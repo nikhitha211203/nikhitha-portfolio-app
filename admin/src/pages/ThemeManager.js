@@ -10,13 +10,17 @@ const ThemeManager = () => {
         textMain: '#f8fafc'
     });
     const [message, setMessage] = useState('');
-    const API_URL = process.env.REACT_APP_API_URL || 'https://nikhitha-portfolio-app.onrender.com';
+
+    // Correct API URL logic for local development
+    const API_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : (process.env.REACT_APP_API_URL || 'https://nikhitha-portfolio-app.onrender.com');
 
     useEffect(() => {
         const fetchTheme = async () => {
             try {
                 const res = await axios.get(`${API_URL}/api/theme`);
-                if (res.data) {
+                if (res.data && res.data.primary) { // Ensure data exists
                     setTheme({
                         primary: res.data.primary,
                         secondary: res.data.secondary,
@@ -30,7 +34,26 @@ const ThemeManager = () => {
             }
         };
         fetchTheme();
-    }, []);
+    }, [API_URL]);
+
+    const presets = [
+        { name: 'Midnight (Default)', primary: '#6366f1', secondary: '#ec4899', accent: '#8b5cf6', bgDark: '#0f172a', textMain: '#f8fafc' },
+        { name: 'Ocean Blue', primary: '#0ea5e9', secondary: '#3b82f6', accent: '#06b6d4', bgDark: '#020617', textMain: '#f1f5f9' },
+        { name: 'Sunset', primary: '#f59e0b', secondary: '#ef4444', accent: '#d946ef', bgDark: '#1c1917', textMain: '#fafaf9' },
+        { name: 'Forest', primary: '#22c55e', secondary: '#10b981', accent: '#84cc16', bgDark: '#052e16', textMain: '#f0fdf4' },
+        { name: 'Cyberpunk', primary: '#fct203', secondary: '#ff003c', accent: '#00f3ff', bgDark: '#000000', textMain: '#fff01f' },
+        { name: 'Royal', primary: '#8b5cf6', secondary: '#d946ef', accent: '#6366f1', bgDark: '#1e1b4b', textMain: '#f5f3ff' }
+    ];
+
+    const applyPreset = (preset) => {
+        setTheme({
+            primary: preset.primary,
+            secondary: preset.secondary,
+            accent: preset.accent,
+            bgDark: preset.bgDark,
+            textMain: preset.textMain
+        });
+    };
 
     const handleChange = (e) => {
         setTheme({ ...theme, [e.target.name]: e.target.value });
@@ -39,7 +62,8 @@ const ThemeManager = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
+            const token = localStorage.getItem('token');
+            const config = { headers: { 'x-auth-token': token } };
             await axios.put(`${API_URL}/api/theme`, theme, config);
             setMessage('Theme Updated Successfully!');
             setTimeout(() => setMessage(''), 3000);
@@ -67,6 +91,21 @@ const ThemeManager = () => {
             <div className="row">
                 <div className="col-lg-6">
                     <div className="glass-card p-4 mb-4">
+                        <h4 className="text-muted mb-3">Presets</h4>
+                        <div className="d-flex flex-wrap gap-2 mb-4">
+                            {presets.map((p, i) => (
+                                <button
+                                    key={i}
+                                    className="btn btn-outline-light btn-sm"
+                                    onClick={() => applyPreset(p)}
+                                    style={{ border: `1px solid ${p.primary}`, color: p.primary }}
+                                >
+                                    {p.name}
+                                </button>
+                            ))}
+                        </div>
+
+                        <h4 className="text-muted mb-3">Custom Colors</h4>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group mb-3">
                                 <label className="text-muted mb-2">Primary Color</label>
