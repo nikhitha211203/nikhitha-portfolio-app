@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Theme = require('../models/Theme');
-const auth = require('../middleware/auth');
+const auth = require('../middleware/authMiddleware');
 
 // @route   GET /api/theme
 // @desc    Get active theme
