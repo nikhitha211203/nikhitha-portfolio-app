@@ -55,7 +55,6 @@ const AboutManager = () => {
     };
 
     return (
-    return (
         <div className="manager-container animate-fade-in">
             <h2 className="mb-4 text-gradient">Manage About Info</h2>
             {message && <div className="glass-card p-3 mb-3 text-success text-center">{message}</div>}
