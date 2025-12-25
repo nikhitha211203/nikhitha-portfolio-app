@@ -112,56 +112,104 @@ const ProjectManager = () => {
             {message && <div className="glass-card p-3 mb-3 text-success text-center">{message}</div>}
             {error && <div className="glass-card p-3 mb-3 text-danger text-center">{error}</div>}
 
-            <div className="glass-card p-4 mb-5">
-                <form onSubmit={handleSubmit} className="project-form">
-                    <div className="form-group mb-3">
-                        <label className="text-muted mb-2">Project Title</label>
-                        <input className="login-input" type="text" name="title" value={formData.title} onChange={handleChange} required />
+            <div className="row">
+                {/* Form Section */}
+                <div className="col-lg-5 mb-4">
+                    <div className="glass-card p-4">
+                        <h4 className="text-muted mb-3">{editingId ? 'Edit Project' : 'Add New Project'}</h4>
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group mb-3">
+                                <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>Project Title</label>
+                                <input className="login-input" type="text" name="title" value={formData.title} onChange={handleChange} placeholder="e.g. E-Commerce Platform" required />
+                            </div>
+                            <div className="form-group mb-3">
+                                <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>Description</label>
+                                <textarea className="login-input" name="description" value={formData.description} onChange={handleChange} rows="4" placeholder="Brief overview..." required />
+                            </div>
+                            <div className="form-group mb-3">
+                                <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>Tech Stack</label>
+                                <input className="login-input" type="text" name="techStack" value={formData.techStack} onChange={handleChange} placeholder="React, Node.js, MongoDB" required />
+                            </div>
+                            <div className="row">
+                                <div className="col-md-6 form-group mb-3">
+                                    <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>GitHub Link</label>
+                                    <input className="login-input" type="text" name="githubLink" value={formData.githubLink} onChange={handleChange} placeholder="https://github..." />
+                                </div>
+                                <div className="col-md-6 form-group mb-3">
+                                    <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>Live Link</label>
+                                    <input className="login-input" type="text" name="liveLink" value={formData.liveLink} onChange={handleChange} placeholder="https://..." />
+                                </div>
+                            </div>
+                            <div className="form-group mb-4">
+                                <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>Image URL</label>
+                                <input className="login-input" type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="https://..." />
+                            </div>
+
+                            <button type="submit" className="login-btn w-100">
+                                <i className={`bi ${editingId ? 'bi-check-lg' : 'bi-plus-lg'} me-2`}></i>
+                                {editingId ? 'Update Project' : 'Add Project'}
+                            </button>
+
+                            {editingId && (
+                                <button
+                                    type="button"
+                                    onClick={() => { setEditingId(null); setFormData({ title: '', description: '', techStack: '', githubLink: '', liveLink: '', imageUrl: '' }); }}
+                                    className="btn btn-outline-danger w-100 mt-2 border-0"
+                                >
+                                    Cancel Edit
+                                </button>
+                            )}
+                        </form>
                     </div>
-                    <div className="form-group mb-3">
-                        <label className="text-muted mb-2">Description</label>
-                        <textarea className="login-input" name="description" value={formData.description} onChange={handleChange} required rows="3" />
-                    </div>
-                    <div className="form-group mb-3">
-                        <label className="text-muted mb-2">Tech Stack (comma separated)</label>
-                        <input className="login-input" type="text" name="techStack" value={formData.techStack} onChange={handleChange} placeholder="React, Node.js, MongoDB" />
-                    </div>
-                    <div className="row">
-                        <div className="col-md-6 form-group mb-3">
-                            <label className="text-muted mb-2">GitHub Link</label>
-                            <input className="login-input" type="text" name="githubLink" value={formData.githubLink} onChange={handleChange} />
-                        </div>
-                        <div className="col-md-6 form-group mb-3">
-                            <label className="text-muted mb-2">Live Link</label>
-                            <input className="login-input" type="text" name="liveLink" value={formData.liveLink} onChange={handleChange} />
-                        </div>
-                    </div>
-                    <div className="form-group mb-4">
-                        <label className="text-muted mb-2">Image URL</label>
-                        <input className="login-input" type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="https://example.com/image.png" />
+                </div>
+
+                {/* List Section */}
+                <div className="col-lg-7">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h4 className="text-muted m-0">Existing Projects</h4>
+                        <span className="badge bg-secondary opacity-50">{projects.length} Total</span>
                     </div>
 
-                    <button type="submit" className="login-btn">
-                        {editingId ? 'Update Project' : 'Add Project'}
-                    </button>
-                    {editingId && <button type="button" onClick={() => { setEditingId(null); setFormData({ title: '', description: '', techStack: '', githubLink: '', liveLink: '', imageUrl: '' }); }} className="btn-danger mt-3 w-100">Cancel Edit</button>}
-                </form>
-            </div>
+                    <div className="project-list" style={{ maxHeight: '80vh', overflowY: 'auto', paddingRight: '5px' }}>
+                        {projects.map((project) => (
+                            <div key={project._id} className="glass-card p-3 mb-3 position-relative transition-all hover-scale" style={{ borderLeft: `4px solid var(--primary)` }}>
+                                <div className="d-flex justify-content-between align-items-start">
+                                    <div style={{ flex: 1 }}>
+                                        <h5 className="mb-2 text-white">{project.title}</h5>
+                                        <p className="text-muted small mb-2 text-truncate-2" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                            {project.description}
+                                        </p>
+                                        <div className="d-flex flex-wrap gap-1 mb-2">
+                                            {project.techStack.slice(0, 4).map((tech, idx) => (
+                                                <span key={idx} className="badge" style={{ background: 'rgba(255,255,255,0.1)', fontWeight: 'normal' }}>{tech}</span>
+                                            ))}
+                                            {project.techStack.length > 4 && <span className="badge text-muted">+{project.techStack.length - 4}</span>}
+                                        </div>
+                                        <div className="d-flex gap-3 small">
+                                            {project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer" className="text-decoration-none text-info"><i className="bi bi-github me-1"></i>Code</a>}
+                                            {project.liveLink && <a href={project.liveLink} target="_blank" rel="noreferrer" className="text-decoration-none text-success"><i className="bi bi-link-45deg me-1"></i>Demo</a>}
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-column gap-2 ms-3">
+                                        <button className="btn btn-sm btn-outline-light border-0" onClick={() => handleEdit(project)} title="Edit">
+                                            <i className="bi bi-pencil-square text-warning"></i>
+                                        </button>
+                                        <button className="btn btn-sm btn-outline-light border-0" onClick={() => handleDelete(project._id)} title="Delete">
+                                            <i className="bi bi-trash text-danger"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
 
-            <div className="item-list">
-                {projects.map(project => (
-                    <div key={project._id} className="glass-card p-4 mb-3 d-flex justify-content-between align-items-center">
-                        <div>
-                            <h4 className="mb-2">{project.title}</h4>
-                            <p className="text-muted mb-2" style={{ maxWidth: '600px' }}>{project.description.substring(0, 100)}...</p>
-                            <small className="text-primary">{project.techStack.join(', ')}</small>
-                        </div>
-                        <div className="d-flex gap-2">
-                            <button onClick={() => handleEdit(project)} className="btn-edit">Edit</button>
-                            <button onClick={() => handleDelete(project._id)} className="btn-danger">Delete</button>
-                        </div>
+                        {projects.length === 0 && (
+                            <div className="text-center text-muted py-5 glass-card">
+                                <i className="bi bi-folder2-open display-4 mb-3 d-block opacity-25"></i>
+                                No projects added yet.
+                            </div>
+                        )}
                     </div>
-                ))}
+                </div>
             </div>
         </div>
     );
