@@ -20,7 +20,7 @@ const ThemeManager = () => {
         const fetchTheme = async () => {
             try {
                 const res = await axios.get(`${API_URL}/api/theme`);
-                if (res.data && res.data.primary) { // Ensure data exists
+                if (res.data && res.data.primary) {
                     setTheme({
                         primary: res.data.primary,
                         secondary: res.data.secondary,
@@ -77,10 +77,10 @@ const ThemeManager = () => {
     const previewStyle = {
         background: theme.bgDark,
         color: theme.textMain,
-        padding: '20px',
-        borderRadius: '8px',
-        border: '1px solid rgba(255,255,255,0.1)',
-        marginTop: '20px'
+        padding: '2rem',
+        borderRadius: '16px',
+        border: '1px solid rgba(255,255,255,0.05)',
+        marginTop: '0'
     };
 
     return (
@@ -89,109 +89,148 @@ const ThemeManager = () => {
             {message && <div className="glass-card p-3 mb-3 text-success text-center">{message}</div>}
 
             <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-7">
                     <div className="glass-card p-4 mb-4">
-                        <h4 className="text-muted mb-3">Quick Presets</h4>
-                        <div className="d-grid gap-2 mb-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))' }}>
+                        <h4 className="text-muted mb-4">Quick Presets</h4>
+                        <div className="d-grid gap-3 mb-5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
                             {presets.map((p, i) => (
                                 <button
                                     key={i}
-                                    className="btn btn-sm text-start p-2 position-relative overflow-hidden"
+                                    className="btn text-start p-3 position-relative overflow-hidden transition-all"
                                     onClick={() => applyPreset(p)}
                                     style={{
                                         border: '1px solid rgba(255,255,255,0.1)',
-                                        background: 'rgba(255,255,255,0.05)',
-                                        color: 'white'
+                                        background: 'rgba(255,255,255,0.03)',
+                                        color: 'white',
+                                        borderRadius: '12px'
                                     }}
                                 >
-                                    <div className="d-flex align-items-center gap-2">
-                                        <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: `linear-gradient(135deg, ${p.primary}, ${p.secondary})` }}></div>
-                                        <span>{p.name.split(' ')[0]}</span>
+                                    <div className="d-flex align-items-center gap-3">
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '50%',
+                                            background: `linear-gradient(135deg, ${p.primary}, ${p.secondary})`,
+                                            boxShadow: `0 0 10px ${p.primary}40`
+                                        }}></div>
+                                        <span style={{ fontWeight: 500 }}>{p.name.split(' ')[0]}</span>
                                     </div>
                                 </button>
                             ))}
                         </div>
 
-                        <h4 className="text-muted mb-3">Fine Tune Colors</h4>
+                        <h4 className="text-muted mb-4">Fine Tune Colors</h4>
                         <form onSubmit={handleSubmit}>
-                            {[
-                                { label: 'Primary', name: 'primary' },
-                                { label: 'Secondary', name: 'secondary' },
-                                { label: 'Accent', name: 'accent' },
-                                { label: 'Background', name: 'bgDark' },
-                                { label: 'Text', name: 'textMain' }
-                            ].map((field) => (
-                                <div className="form-group mb-3" key={field.name}>
-                                    <label className="text-muted mb-1 text-uppercase small" style={{ letterSpacing: '1px' }}>{field.label}</label>
-                                    <div className="input-group">
-                                        <div className="input-group-text p-0 border-0" style={{ width: '40px', overflow: 'hidden', background: 'none' }}>
-                                            <input
-                                                type="color"
-                                                name={field.name}
-                                                value={theme[field.name]}
-                                                onChange={handleChange}
-                                                style={{ width: '150%', height: '150%', transform: 'translate(-25%, -25%)', cursor: 'pointer', border: 'none', padding: 0 }}
-                                            />
+                            <div className="row g-3">
+                                {[
+                                    { label: 'Primary', name: 'primary' },
+                                    { label: 'Secondary', name: 'secondary' },
+                                    { label: 'Accent', name: 'accent' },
+                                    { label: 'Background', name: 'bgDark' },
+                                    { label: 'Text', name: 'textMain' }
+                                ].map((field) => (
+                                    <div className="col-md-6" key={field.name}>
+                                        <div className="p-3 rounded-3" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                            <label className="text-muted mb-2 text-uppercase small d-block" style={{ letterSpacing: '1px', fontSize: '0.7rem' }}>{field.label}</label>
+                                            <div className="d-flex align-items-center gap-3">
+                                                <div style={{
+                                                    width: '40px',
+                                                    height: '40px',
+                                                    borderRadius: '8px',
+                                                    overflow: 'hidden',
+                                                    border: '2px solid rgba(255,255,255,0.1)',
+                                                    position: 'relative'
+                                                }}>
+                                                    <input
+                                                        type="color"
+                                                        name={field.name}
+                                                        value={theme[field.name]}
+                                                        onChange={handleChange}
+                                                        style={{
+                                                            padding: 0,
+                                                            width: '150%',
+                                                            height: '150%',
+                                                            transform: 'translate(-25%, -25%)',
+                                                            cursor: 'pointer',
+                                                            border: 'none',
+                                                            background: 'none'
+                                                        }}
+                                                    />
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    name={field.name}
+                                                    value={theme[field.name]}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    style={{
+                                                        background: 'transparent',
+                                                        border: 'none',
+                                                        color: 'white',
+                                                        fontFamily: 'monospace',
+                                                        fontSize: '1rem',
+                                                        boxShadow: 'none',
+                                                        padding: 0
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
-                                        <input
-                                            className="form-control bg-transparent text-white border-secondary"
-                                            type="text"
-                                            name={field.name}
-                                            value={theme[field.name]}
-                                            onChange={handleChange}
-                                            style={{ borderLeft: 'none' }}
-                                        />
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
 
-                            <button type="submit" className="login-btn mt-3">
-                                <i className="bi bi-check-circle me-2"></i> Save Changes
-                            </button>
+                            <div className="mt-4 pt-3 border-top" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+                                <button type="submit" className="login-btn w-auto px-5" style={{ float: 'right' }}>
+                                    <i className="bi bi-check-lg me-2"></i> Save Theme
+                                </button>
+                                <div style={{ clear: 'both' }}></div>
+                            </div>
                         </form>
                     </div>
                 </div>
 
-                <div className="col-lg-6">
-                    <h4 className="text-muted mb-3">Live Preview</h4>
-                    <div style={previewStyle} className="glass-card">
-                        <div className="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
-                            <span style={{ color: theme.primary, fontWeight: 'bold' }}>Brand Logo</span>
-                            <div className="d-flex gap-3">
-                                <span className="text-muted" style={{ fontSize: '0.9rem' }}>Home</span>
-                                <span className="text-muted" style={{ fontSize: '0.9rem' }}>About</span>
+                <div className="col-lg-5">
+                    <div className="position-sticky" style={{ top: '2rem' }}>
+                        <h4 className="text-muted mb-3">Live Preview</h4>
+                        <div style={previewStyle} className="glass-card shadow-lg">
+                            <div className="d-flex justify-content-between align-items-center mb-5 pb-3" style={{ borderBottom: `1px solid ${theme.primary}30` }}>
+                                <span style={{ color: theme.primary, fontWeight: '800', fontSize: '1.2rem', letterSpacing: '-0.5px' }}>Portfolio.</span>
+                                <div className="d-flex gap-4">
+                                    <span style={{ color: theme.textMain, opacity: 0.7, fontSize: '0.9rem' }}>Work</span>
+                                    <span style={{ color: theme.textMain, opacity: 0.7, fontSize: '0.9rem' }}>About</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <h3 style={{ color: theme.primary }} className="mb-2">Limitless Possibilities</h3>
-                        <h5 style={{ color: theme.secondary }} className="mb-3">Design your future</h5>
-                        <p style={{ color: theme.textMain, opacity: 0.8 }} className="mb-4">
-                            This is a preview of how your typography and colors will interact.
-                            The <span style={{ color: theme.accent }}>accent color</span> highlights key details.
-                        </p>
+                            <h3 style={{ color: theme.textMain, fontSize: '2rem', fontWeight: 'bold' }} className="mb-2">
+                                Create <span style={{ color: theme.primary }}>Digital</span> Experiences
+                            </h3>
+                            <p style={{ color: theme.textMain, opacity: 0.6, lineHeight: '1.6' }} className="mb-5">
+                                This is exactly how your <span style={{ color: theme.secondary, fontWeight: 'bold' }}>colors</span> will appear on your real portfolio website.
+                            </p>
 
-                        <div className="d-flex gap-3">
-                            <button style={{
-                                background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%)`,
-                                color: 'white',
-                                padding: '10px 24px',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontWeight: '600',
-                                boxShadow: `0 4px 15px ${theme.primary}40`
-                            }}>
-                                Primary Action
-                            </button>
-                            <button style={{
-                                background: 'transparent',
-                                color: theme.textMain,
-                                padding: '10px 24px',
-                                border: `1px solid ${theme.accent}`,
-                                borderRadius: '8px',
-                                fontWeight: '600'
-                            }}>
-                                Secondary
-                            </button>
+                            <div className="d-flex gap-3">
+                                <button style={{
+                                    background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%)`,
+                                    color: 'white',
+                                    padding: '12px 28px',
+                                    border: 'none',
+                                    borderRadius: '12px',
+                                    fontWeight: '600',
+                                    boxShadow: `0 10px 20px -5px ${theme.primary}60`
+                                }}>
+                                    Hire Me
+                                </button>
+                                <button style={{
+                                    background: 'rgba(255,255,255,0.05)',
+                                    color: theme.textMain,
+                                    padding: '12px 28px',
+                                    border: `1px solid ${theme.accent}60`,
+                                    borderRadius: '12px',
+                                    fontWeight: '600'
+                                }}>
+                                    View Work
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
