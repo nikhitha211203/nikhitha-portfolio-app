@@ -51,7 +51,8 @@ app.use(
       "http://localhost:3002",
       "https://nikhitha-admin.vercel.app",
       "https://portfolio-nikhitha-kappa.vercel.app",
-      "https://nikhitha-portfolio-app.vercel.app"
+      "https://nikhitha-portfolio-app.vercel.app",
+      "https://nikhitha-portfolio-tan.vercel.app"
 
     ],
     credentials: true,
