@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
 
-const AboutManager = ({ setToken }) => {
+const AboutManager = () => {
     const [formData, setFormData] = useState({
         fullName: '',
         role: '',
@@ -56,21 +55,46 @@ const AboutManager = ({ setToken }) => {
     };
 
     return (
-        <div>
-            <Navbar setToken={setToken} />
-            <div className="manager-container">
-                <h2>Manage About Info</h2>
-                {message && <p>{message}</p>}
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group"><label>Full Name</label><input type="text" name="fullName" value={formData.fullName} onChange={handleChange} /></div>
-                    <div className="form-group"><label>Current Role</label><input type="text" name="role" value={formData.role} onChange={handleChange} /></div>
-                    <div className="form-group"><label>Bio</label><textarea name="bio" value={formData.bio} onChange={handleChange} rows="5" /></div>
-                    <div className="form-group"><label>Profile Image URL</label><input type="text" name="profileUrl" value={formData.profileUrl} onChange={handleChange} /></div>
-                    <div className="form-group"><label>Resume URL</label><input type="text" name="resumeUrl" value={formData.resumeUrl} onChange={handleChange} /></div>
-                    <div className="form-group"><label>Email</label><input type="email" name="email" value={formData.email} onChange={handleChange} /></div>
-                    <div className="form-group"><label>Phone</label><input type="text" name="phone" value={formData.phone} onChange={handleChange} /></div>
+        <div className="manager-container animate-fade-in">
+            <h2 className="mb-4 text-gradient">Manage About Info</h2>
+            {message && <div className="glass-card p-3 mb-3 text-success text-center">{message}</div>}
 
-                    <button type="submit" className="btn-primary">Save Changes</button>
+            <div className="glass-card p-4">
+                <form onSubmit={handleSubmit}>
+                    <div className="row">
+                        <div className="col-md-6 form-group mb-3">
+                            <label className="text-muted mb-2">Full Name</label>
+                            <input className="login-input" type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+                        </div>
+                        <div className="col-md-6 form-group mb-3">
+                            <label className="text-muted mb-2">Current Role</label>
+                            <input className="login-input" type="text" name="role" value={formData.role} onChange={handleChange} />
+                        </div>
+                    </div>
+                    <div className="form-group mb-3">
+                        <label className="text-muted mb-2">Bio</label>
+                        <textarea className="login-input" name="bio" value={formData.bio} onChange={handleChange} rows="5" />
+                    </div>
+                    <div className="form-group mb-3">
+                        <label className="text-muted mb-2">Profile Image URL</label>
+                        <input className="login-input" type="text" name="profileUrl" value={formData.profileUrl} onChange={handleChange} />
+                    </div>
+                    <div className="form-group mb-3">
+                        <label className="text-muted mb-2">Resume URL</label>
+                        <input className="login-input" type="text" name="resumeUrl" value={formData.resumeUrl} onChange={handleChange} />
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6 form-group mb-3">
+                            <label className="text-muted mb-2">Email</label>
+                            <input className="login-input" type="email" name="email" value={formData.email} onChange={handleChange} />
+                        </div>
+                        <div className="col-md-6 form-group mb-3">
+                            <label className="text-muted mb-2">Phone</label>
+                            <input className="login-input" type="text" name="phone" value={formData.phone} onChange={handleChange} />
+                        </div>
+                    </div>
+
+                    <button type="submit" className="login-btn">Save Changes</button>
                 </form>
             </div>
         </div>

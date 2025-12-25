@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
 
-const ExperienceManager = ({ setToken }) => {
+const ExperienceManager = () => {
     const [experiences, setExperiences] = useState([]);
     const [education, setEducation] = useState([]);
     const [editingExpId, setEditingExpId] = useState(null);
@@ -123,64 +122,74 @@ const ExperienceManager = ({ setToken }) => {
     };
 
     return (
-        <div>
-            <Navbar setToken={setToken} />
-            <div className="manager-container">
-                <h2>Manage Experience & Education</h2>
-                {message && <p className="success-msg">{message}</p>}
+        <div className="manager-container animate-fade-in">
+            <h2 className="mb-4 text-gradient">Manage Experience & Education</h2>
+            {message && <div className="glass-card p-3 mb-3 text-success text-center">{message}</div>}
 
-                {/* Experience Section */}
-                <section>
-                    <h3>Add Experience</h3>
+            {/* Experience Section */}
+            <section className="mb-5">
+                <h3 className="mb-3 text-light">Experience</h3>
+                <div className="glass-card p-4 mb-4">
                     <form onSubmit={handleExpSubmit}>
-                        <div className="form-group"><label>Job Title</label><input type="text" name="jobTitle" value={expForm.jobTitle} onChange={handleExpChange} required /></div>
-                        <div className="form-group"><label>Company</label><input type="text" name="company" value={expForm.company} onChange={handleExpChange} required /></div>
-                        <div className="form-group"><label>Duration</label><input type="text" name="duration" value={expForm.duration} onChange={handleExpChange} placeholder="e.g. Jan 2020 - Present" required /></div>
-                        <div className="form-group"><label>Description</label><textarea name="description" value={expForm.description} onChange={handleExpChange} /></div>
-                        <button type="submit" className="btn-primary">{editingExpId ? 'Update Experience' : 'Add Experience'}</button>
-                        {editingExpId && <button type="button" onClick={cancelEditExp} className="btn-danger">Cancel Edit</button>}
+                        <div className="row">
+                            <div className="col-md-6 form-group mb-3"><label className="text-muted mb-2">Job Title</label><input className="login-input" type="text" name="jobTitle" value={expForm.jobTitle} onChange={handleExpChange} required /></div>
+                            <div className="col-md-6 form-group mb-3"><label className="text-muted mb-2">Company</label><input className="login-input" type="text" name="company" value={expForm.company} onChange={handleExpChange} required /></div>
+                        </div>
+                        <div className="form-group mb-3"><label className="text-muted mb-2">Duration</label><input className="login-input" type="text" name="duration" value={expForm.duration} onChange={handleExpChange} placeholder="e.g. Jan 2020 - Present" required /></div>
+                        <div className="form-group mb-4"><label className="text-muted mb-2">Description</label><textarea className="login-input" name="description" value={expForm.description} onChange={handleExpChange} rows="3" /></div>
+                        <button type="submit" className="login-btn">{editingExpId ? 'Update Experience' : 'Add Experience'}</button>
+                        {editingExpId && <button type="button" onClick={cancelEditExp} className="btn-danger mt-3 w-100">Cancel Edit</button>}
                     </form>
+                </div>
 
-                    <div className="item-list">
-                        {experiences.map(exp => (
-                            <div key={exp._id} className="item-card">
-                                <div><h4>{exp.jobTitle} at {exp.company}</h4><p>{exp.duration}</p></div>
-                                <div>
-                                    <button onClick={() => handleEditExp(exp)} className="btn-edit">Edit</button>
-                                    <button onClick={() => deleteExp(exp._id)} className="btn-danger">Delete</button>
-                                </div>
+                <div className="item-list">
+                    {experiences.map(exp => (
+                        <div key={exp._id} className="glass-card p-4 mb-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 className="mb-1">{exp.jobTitle} <span className="text-primary">@ {exp.company}</span></h4>
+                                <p className="text-muted small mb-2">{exp.duration}</p>
                             </div>
-                        ))}
-                    </div>
-                </section>
+                            <div className="d-flex gap-2">
+                                <button onClick={() => handleEditExp(exp)} className="btn-edit">Edit</button>
+                                <button onClick={() => deleteExp(exp._id)} className="btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
 
-                <hr style={{ margin: '3rem 0' }} />
-
-                {/* Education Section */}
-                <section>
-                    <h3>Add Education</h3>
+            {/* Education Section */}
+            <section>
+                <h3 className="mb-3 text-light">Education</h3>
+                <div className="glass-card p-4 mb-4">
                     <form onSubmit={handleEduSubmit}>
-                        <div className="form-group"><label>School/University</label><input type="text" name="school" value={eduForm.school} onChange={handleEduChange} required /></div>
-                        <div className="form-group"><label>Degree</label><input type="text" name="degree" value={eduForm.degree} onChange={handleEduChange} required /></div>
-                        <div className="form-group"><label>Duration</label><input type="text" name="duration" value={eduForm.duration} onChange={handleEduChange} required /></div>
-                        <div className="form-group"><label>Description</label><textarea name="description" value={eduForm.description} onChange={handleEduChange} /></div>
-                        <button type="submit" className="btn-primary">{editingEduId ? 'Update Education' : 'Add Education'}</button>
-                        {editingEduId && <button type="button" onClick={cancelEditEdu} className="btn-danger">Cancel Edit</button>}
+                        <div className="row">
+                            <div className="col-md-6 form-group mb-3"><label className="text-muted mb-2">School/University</label><input className="login-input" type="text" name="school" value={eduForm.school} onChange={handleEduChange} required /></div>
+                            <div className="col-md-6 form-group mb-3"><label className="text-muted mb-2">Degree</label><input className="login-input" type="text" name="degree" value={eduForm.degree} onChange={handleEduChange} required /></div>
+                        </div>
+                        <div className="form-group mb-3"><label className="text-muted mb-2">Duration</label><input className="login-input" type="text" name="duration" value={eduForm.duration} onChange={handleEduChange} required /></div>
+                        <div className="form-group mb-4"><label className="text-muted mb-2">Description</label><textarea className="login-input" name="description" value={eduForm.description} onChange={handleEduChange} rows="3" /></div>
+                        <button type="submit" className="login-btn">{editingEduId ? 'Update Education' : 'Add Education'}</button>
+                        {editingEduId && <button type="button" onClick={cancelEditEdu} className="btn-danger mt-3 w-100">Cancel Edit</button>}
                     </form>
+                </div>
 
-                    <div className="item-list">
-                        {education.map(edu => (
-                            <div key={edu._id} className="item-card">
-                                <div><h4>{edu.degree} - {edu.school}</h4><p>{edu.duration}</p></div>
-                                <div>
-                                    <button onClick={() => handleEditEdu(edu)} className="btn-edit">Edit</button>
-                                    <button onClick={() => deleteEdu(edu._id)} className="btn-danger">Delete</button>
-                                </div>
+                <div className="item-list">
+                    {education.map(edu => (
+                        <div key={edu._id} className="glass-card p-4 mb-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 className="mb-1">{edu.degree}</h4>
+                                <p className="text-secondary mb-1">{edu.school}</p>
+                                <p className="text-muted small mb-0">{edu.duration}</p>
                             </div>
-                        ))}
-                    </div>
-                </section>
-            </div>
+                            <div className="d-flex gap-2">
+                                <button onClick={() => handleEditEdu(edu)} className="btn-edit">Edit</button>
+                                <button onClick={() => deleteEdu(edu._id)} className="btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
         </div>
     );
 };

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
 
-const MessagesManager = ({ setToken }) => {
+const MessagesManager = () => {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState('');
   const [expandedId, setExpandedId] = useState(null);
@@ -47,37 +46,34 @@ const MessagesManager = ({ setToken }) => {
   };
 
   return (
-    <div>
-      <Navbar setToken={setToken} />
-      <div className="manager-container">
-        <h2>Messages</h2>
-        {error && <p className="error-msg">{error}</p>}
-        <div className="item-list">
-          {messages.length === 0 && <p>No messages found.</p>}
-          {messages.map(msg => (
-            <div key={msg._id} className="item-card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <strong>{msg.name}</strong> <span>— {msg.email}</span>
-                  <div style={{ fontSize: '0.9rem', color: '#666' }}>{new Date(msg.createdAt).toLocaleString()}</div>
-                </div>
-                <div>
-                  {!msg.isRead && <button onClick={() => markAsRead(msg._id)} className="btn-primary">Mark as Read</button>}
-                  <button onClick={() => handleDelete(msg._id)} className="btn-danger">Delete</button>
-                  <button onClick={() => setExpandedId(expandedId === msg._id ? null : msg._id)} style={{ marginLeft: '8px' }} className="btn-secondary">{expandedId === msg._id ? 'Hide' : 'View'}</button>
-                </div>
+    <div className="manager-container animate-fade-in">
+      <h2 className="mb-4 text-gradient">Messages</h2>
+      {error && <div className="glass-card p-3 mb-3 text-danger text-center">{error}</div>}
+
+      <div className="item-list">
+        {messages.length === 0 && <p className="text-muted text-center mt-5">No messages found.</p>}
+        {messages.map(msg => (
+          <div key={msg._id} className={`glass-card p-4 mb-3 ${msg.isRead ? 'opacity-75' : 'border-primary'}`}>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h5 className="mb-1">{msg.name}</h5>
+                <p className="text-primary mb-1">{msg.email}</p>
+                <small className="text-muted">{new Date(msg.createdAt).toLocaleString()}</small>
               </div>
-
-              {expandedId === msg._id && (
-                <div style={{ marginTop: '1rem' }}>
-                  <p>{msg.message}</p>
-                </div>
-              )}
-
-              {msg.isRead && <div style={{ marginTop: '0.5rem', color: 'green' }}><small>Read</small></div>}
+              <div>
+                {!msg.isRead && <button onClick={() => markAsRead(msg._id)} className="login-btn py-2 px-3 me-2" style={{ width: 'auto', fontSize: '0.8rem' }}>Mark Read</button>}
+                <button onClick={() => handleDelete(msg._id)} className="btn-danger me-2">Delete</button>
+                <button onClick={() => setExpandedId(expandedId === msg._id ? null : msg._id)} className="btn-edit">{expandedId === msg._id ? 'Hide' : 'View'}</button>
+              </div>
             </div>
-          ))}
-        </div>
+
+            {expandedId === msg._id && (
+              <div className="mt-3 p-3" style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                <p className="mb-0 text-light">{msg.message}</p>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

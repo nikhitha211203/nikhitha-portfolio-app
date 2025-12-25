@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = ({ setToken }) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = () => {
         setToken(null);
@@ -10,17 +11,37 @@ const Navbar = ({ setToken }) => {
         navigate('/login');
     };
 
+    const isActive = (path) => location.pathname === path ? 'active' : '';
+
     return (
-        <nav className="navbar">
+        <nav className="navbar glass-panel">
             <div className="nav-brand">Admin Panel</div>
             <div className="nav-links">
-                <Link to="/">Dashboard</Link>
-                <Link to="/projects">Projects</Link>
-                <Link to="/skills">Skills</Link>
-                <Link to="/experience">Experience</Link>
-                <Link to="/about">About</Link>
-                <Link to="/messages">Messages</Link>
-                <button onClick={handleLogout} className="logout-btn">Logout</button>
+                <Link to="/" className={isActive('/')}>
+                    <i className="bi bi-speedometer2"></i> Dashboard
+                </Link>
+                <Link to="/about" className={isActive('/about')}>
+                    <i className="bi bi-person-badge"></i> About Me
+                </Link>
+                <Link to="/projects" className={isActive('/projects')}>
+                    <i className="bi bi-code-square"></i> Projects
+                </Link>
+                <Link to="/skills" className={isActive('/skills')}>
+                    <i className="bi bi-lightning-charge"></i> Skills
+                </Link>
+                <Link to="/experience" className={isActive('/experience')}>
+                    <i className="bi bi-briefcase"></i> Experience
+                </Link>
+                <Link to="/messages" className={isActive('/messages')}>
+                    <i className="bi bi-chat-dots"></i> Messages
+                </Link>
+                <Link to="/theme" className={isActive('/theme')}>
+                    <i className="bi bi-palette"></i> Theme
+                </Link>
+
+                <button onClick={handleLogout} className="logout-btn">
+                    <i className="bi bi-box-arrow-left"></i> Logout
+                </button>
             </div>
         </nav>
     );
