@@ -69,7 +69,7 @@ app.use("/api/projects", require("./routes/projectRoutes"));
 app.use("/api/skills", require("./routes/skillRoutes"));
 app.use("/api/about", require("./routes/aboutRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
-app.use("/api/experience", require("./routes/experienceRoutes"));
+app.use("/api", require("./routes/experienceRoutes"));
 app.use("/api/theme", require("./routes/themeRoutes"));
 
 // ===============================
