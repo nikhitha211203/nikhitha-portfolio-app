@@ -38,6 +38,8 @@ const ThemeManager = () => {
 
     const presets = [
         { name: 'Midnight (Default)', primary: '#6366f1', secondary: '#ec4899', accent: '#8b5cf6', bgDark: '#0f172a', textMain: '#f8fafc' },
+        { name: 'Light Mode', primary: '#4f46e5', secondary: '#ec4899', accent: '#8b5cf6', bgDark: '#ffffff', textMain: '#1e293b' },
+        { name: 'Deep Dark', primary: '#38bdf8', secondary: '#818cf8', accent: '#c084fc', bgDark: '#000000', textMain: '#e2e8f0' },
         { name: 'Ocean Blue', primary: '#0ea5e9', secondary: '#3b82f6', accent: '#06b6d4', bgDark: '#020617', textMain: '#f1f5f9' },
         { name: 'Sunset', primary: '#f59e0b', secondary: '#ef4444', accent: '#d946ef', bgDark: '#1c1917', textMain: '#fafaf9' },
         { name: 'Forest', primary: '#22c55e', secondary: '#10b981', accent: '#84cc16', bgDark: '#052e16', textMain: '#f0fdf4' },
