@@ -98,20 +98,19 @@ const SkillManager = () => {
                             <div className="form-group mb-5">
                                 <div className="d-flex justify-content-between mb-2">
                                     <label className="text-muted text-uppercase small">Proficiency</label>
-                                    <span className="text-primary fw-bold">{formData.level}%</span>
+                                    <span className="text-primary fw-bold px-2 py-1 rounded" style={{ background: 'rgba(99,102,241,0.1)' }}>{formData.level}%</span>
                                 </div>
                                 <input
-                                    className="w-100 form-range custom-range"
+                                    className="custom-range"
                                     type="range"
                                     name="level"
                                     min="1"
                                     max="100"
                                     value={formData.level}
                                     onChange={handleChange}
-                                    style={{ accentColor: 'var(--primary)' }}
                                 />
                             </div>
-                            <button type="submit" className="login-btn">
+                            <button type="submit" className="login-btn w-100">
                                 <i className={`bi ${editingId ? 'bi-check-lg' : 'bi-plus-lg'} me-2`}></i>
                                 {editingId ? 'Update Skill' : 'Add Skill'}
                             </button>
@@ -130,15 +129,25 @@ const SkillManager = () => {
                         <span className="badge bg-secondary opacity-50">{skills.length} Items</span>
                     </div>
 
-                    <div className="item-list" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+                    <div className="item-list" style={{ maxHeight: '80vh', overflowY: 'auto', padding: '0 5px' }}>
                         {skills.map(skill => (
-                            <div key={skill._id} className="glass-card p-3 mb-3 d-flex align-items-center" style={{ borderLeft: `4px solid ${skill.level > 80 ? '#22c55e' : skill.level > 50 ? '#f59e0b' : '#ef4444'}` }}>
-                                <div className="flex-grow-1 me-3">
-                                    <div className="d-flex justify-content-between align-items-center mb-1">
-                                        <h5 className="mb-0 text-white">{skill.name}</h5>
-                                        <span className="badge bg-dark border border-secondary">{skill.category}</span>
+                            <div key={skill._id} className="glass-card p-4 mb-3 d-flex align-items-center" style={{ position: 'relative', overflow: 'hidden' }}>
+                                {/* Indicator Line */}
+                                <div style={{
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    width: '4px',
+                                    background: skill.level > 80 ? '#22c55e' : skill.level > 50 ? '#f59e0b' : '#ef4444'
+                                }}></div>
+
+                                <div className="flex-grow-1 me-4 ps-2">
+                                    <div className="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 className="mb-0 text-white fw-bold">{skill.name}</h5>
+                                        <span className="badge bg-dark border border-secondary text-muted fw-normal">{skill.category}</span>
                                     </div>
-                                    <div className="progress" style={{ height: '6px', background: 'rgba(255,255,255,0.1)' }}>
+                                    <div className="progress" style={{ height: '6px', background: 'rgba(255,255,255,0.05)' }}>
                                         <div
                                             className="progress-bar"
                                             role="progressbar"
@@ -151,8 +160,8 @@ const SkillManager = () => {
                                     </div>
                                 </div>
                                 <div className="d-flex gap-2">
-                                    <button onClick={() => handleEdit(skill)} className="btn btn-sm btn-outline-warning border-0" title="Edit"><i className="bi bi-pencil"></i></button>
-                                    <button onClick={() => handleDelete(skill._id)} className="btn btn-sm btn-outline-danger border-0" title="Delete"><i className="bi bi-trash"></i></button>
+                                    <button onClick={() => handleEdit(skill)} className="btn-icon-edit" title="Edit"><i className="bi bi-pencil-fill"></i></button>
+                                    <button onClick={() => handleDelete(skill._id)} className="btn-icon-delete" title="Delete"><i className="bi bi-trash-fill"></i></button>
                                 </div>
                             </div>
                         ))}

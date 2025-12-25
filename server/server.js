@@ -72,6 +72,10 @@ app.use("/api/about", require("./routes/aboutRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
 app.use("/api", require("./routes/experienceRoutes"));
 app.use("/api/theme", require("./routes/themeRoutes"));
+app.use("/api/upload", require("./routes/upload"));
+
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ===============================
 //  MongoDB Connection

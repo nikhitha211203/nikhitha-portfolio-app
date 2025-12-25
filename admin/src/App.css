@@ -1,3 +1,8 @@
+/* Global Reset */
+* {
+  box-sizing: border-box;
+}
+
 /* Layout */
 .App {
   display: flex;
@@ -12,7 +17,6 @@
   flex: 1;
   padding: 3rem;
   margin-left: 280px;
-  /* Fixed width matching sidebar */
   width: calc(100% - 280px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   min-height: 100vh;
@@ -22,7 +26,6 @@
   margin-left: 0;
   width: 100%;
   padding: 2rem;
-  /* Less padding on mobile/expanded */
 }
 
 /* Navbar / Sidebar */
@@ -32,13 +35,11 @@
   left: 0;
   height: 100vh;
   width: 280px;
-  /* Slightly wider for better breathing room */
   display: flex;
   flex-direction: column;
   padding: 2rem;
   z-index: 1000;
   background: rgba(15, 23, 42, 0.6);
-  /* Semi-transparent dark */
   backdrop-filter: blur(12px);
   border-right: 1px solid rgba(255, 255, 255, 0.05);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -75,7 +76,6 @@
 
 .toggle-btn.shifted {
   left: 300px;
-  /* 280px width + 20px gap */
 }
 
 /* Nav Brand */
@@ -88,7 +88,6 @@
   background-clip: text;
   color: transparent;
   margin-top: 2rem;
-  /* Space for toggle button if inside */
 }
 
 .nav-links {
@@ -182,7 +181,7 @@
   margin: 0;
 }
 
-/* Login */
+/* Login & Forms */
 .login-container {
   width: 100vw;
   height: 100vh;
@@ -200,119 +199,136 @@
   padding: 3rem;
 }
 
+/* Enhanced Inputs */
 .login-input {
   width: 100%;
-  padding: 1rem;
+  padding: 0.875rem 1rem;
   margin-bottom: 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.6);
+  /* Slightly darker for better contrast */
   border: 1px solid var(--glass-border);
-  border-radius: 8px;
+  border-radius: 10px;
   color: white;
   outline: none;
-  transition: border-color 0.3s;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
-/* Specific fix for inputs in flex containers (ThemeManager) */
+.login-input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
 .d-flex .login-input {
   margin-bottom: 0;
-  /* Remove bottom margin when in flex row */
   flex: 1;
-  /* Allow it to take available space but not force 100% width of parent if parent is constrained */
   min-width: 0;
-  /* Prevent flex item overflow */
 }
 
 .login-input:focus {
   border-color: var(--primary);
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 /* Modern Button Styles */
 .login-btn {
-  width: 100%;
-  padding: 1rem;
+  /* Removed fixed width w-100 logic handled by classes */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.5rem;
   background-size: 200% auto;
   background-image: linear-gradient(to right, #6366f1 0%, #ec4899 51%, #6366f1 100%);
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   color: white;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: 0.5s;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
 .login-btn:hover {
   background-position: right center;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.5);
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
 }
 
-.btn-danger {
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  border: none;
-  color: white;
-  padding: 8px 16px;
+.btn-glass-danger {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  padding: 6px 14px;
   border-radius: 8px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);
+  transition: all 0.3s;
 }
 
-.btn-danger:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(239, 68, 68, 0.4);
-}
-
-.btn-edit {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  border: none;
+.btn-glass-danger:hover {
+  background: rgba(239, 68, 68, 0.25);
   color: white;
-  padding: 8px 16px;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Action Buttons (Edit/Delete icons) */
+.btn-icon-edit {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 8px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2);
+  padding: 6px 10px;
+  transition: all 0.2s;
 }
 
-.btn-edit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(245, 158, 11, 0.4);
+.btn-icon-edit:hover {
+  background: rgba(245, 158, 11, 0.2);
+  color: white;
 }
 
-/* Forms & Tables */
+.btn-icon-delete {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.2s;
+}
+
+.btn-icon-delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: white;
+}
+
+/* Manage Pages Utilities */
 .manager-container {
-  max-width: 100%;
-  /* Allow full width but constrained by padding */
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-.glass-table {
+/* Range Input Styling */
+.custom-range {
+  -webkit-appearance: none;
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
+  height: 6px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
 }
 
-.glass-table th {
-  padding: 1rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  transition: transform 0.2s;
 }
 
-.glass-table td {
-  padding: 1rem;
-  background: rgba(30, 41, 59, 0.25);
-  backdrop-filter: blur(8px);
-}
-
-.glass-table tr td:first-child {
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-}
-
-.glass-table tr td:last-child {
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+.custom-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
 }

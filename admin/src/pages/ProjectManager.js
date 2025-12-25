@@ -11,6 +11,7 @@ const ProjectManager = () => {
         liveLink: '',
         imageUrl: ''
     });
+    const [imageFile, setImageFile] = useState(null);
     const [editingId, setEditingId] = useState(null);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
@@ -35,6 +36,25 @@ const ProjectManager = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleFileChange = (e) => {
+        setImageFile(e.target.files[0]);
+    };
+
+    const uploadImage = async () => {
+        if (!imageFile) return formData.imageUrl;
+        const data = new FormData();
+        data.append('image', imageFile);
+        try {
+            const res = await axios.post(`${API_URL}/api/upload`, data, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            return res.data; // Returns the file path
+        } catch (err) {
+            console.error('Image upload failed', err);
+            return formData.imageUrl; // Fallback
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -44,9 +64,12 @@ const ProjectManager = () => {
                 }
             };
 
+            const uploadedImageUrl = await uploadImage();
+
             // Convert techStack string to array
             const projectData = {
                 ...formData,
+                imageUrl: uploadedImageUrl,
                 techStack: formData.techStack.split(',').map(tech => tech.trim())
             };
 
@@ -66,6 +89,7 @@ const ProjectManager = () => {
                 liveLink: '',
                 imageUrl: ''
             });
+            setImageFile(null);
             setEditingId(null);
             fetchProjects();
             setTimeout(() => setMessage(''), 3000);
@@ -141,8 +165,9 @@ const ProjectManager = () => {
                                 </div>
                             </div>
                             <div className="form-group mb-4">
-                                <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>Image URL</label>
-                                <input className="login-input" type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="https://..." />
+                                <label className="text-muted mb-2 small text-uppercase" style={{ letterSpacing: '1px' }}>Project Image</label>
+                                <input className="login-input" type="file" onChange={handleFileChange} accept="image/*" />
+                                {formData.imageUrl && <div className="mt-2"><small className="text-muted">Current: </small><span className="text-info text-truncate d-inline-block" style={{ maxWidth: '200px' }}>{formData.imageUrl}</span></div>}
                             </div>
 
                             <button type="submit" className="login-btn w-100">
@@ -153,8 +178,8 @@ const ProjectManager = () => {
                             {editingId && (
                                 <button
                                     type="button"
-                                    onClick={() => { setEditingId(null); setFormData({ title: '', description: '', techStack: '', githubLink: '', liveLink: '', imageUrl: '' }); }}
-                                    className="btn btn-outline-danger w-100 mt-2 border-0"
+                                    onClick={() => { setEditingId(null); setFormData({ title: '', description: '', techStack: '', githubLink: '', liveLink: '', imageUrl: '' }); setImageFile(null); }}
+                                    className="btn btn-sm btn-outline-danger w-100 mt-2 border-0"
                                 >
                                     Cancel Edit
                                 </button>
@@ -185,17 +210,22 @@ const ProjectManager = () => {
                                             ))}
                                             {project.techStack.length > 4 && <span className="badge text-muted">+{project.techStack.length - 4}</span>}
                                         </div>
+                                        {project.imageUrl && (
+                                            <div className="mb-2">
+                                                <img src={`${API_URL}${project.imageUrl}`} alt="Preview" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} onError={(e) => e.target.style.display = 'none'} />
+                                            </div>
+                                        )}
                                         <div className="d-flex gap-3 small">
                                             {project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer" className="text-decoration-none text-info"><i className="bi bi-github me-1"></i>Code</a>}
                                             {project.liveLink && <a href={project.liveLink} target="_blank" rel="noreferrer" className="text-decoration-none text-success"><i className="bi bi-link-45deg me-1"></i>Demo</a>}
                                         </div>
                                     </div>
                                     <div className="d-flex flex-column gap-2 ms-3">
-                                        <button className="btn btn-sm btn-outline-light border-0" onClick={() => handleEdit(project)} title="Edit">
-                                            <i className="bi bi-pencil-square text-warning"></i>
+                                        <button className="btn-icon-edit" onClick={() => handleEdit(project)} title="Edit">
+                                            <i className="bi bi-pencil-fill"></i>
                                         </button>
-                                        <button className="btn btn-sm btn-outline-light border-0" onClick={() => handleDelete(project._id)} title="Delete">
-                                            <i className="bi bi-trash text-danger"></i>
+                                        <button className="btn-icon-delete" onClick={() => handleDelete(project._id)} title="Delete">
+                                            <i className="bi bi-trash-fill"></i>
                                         </button>
                                     </div>
                                 </div>

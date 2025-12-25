@@ -107,7 +107,7 @@ const AboutManager = () => {
 
                             <hr className="border-secondary my-4" />
 
-                            <button type="submit" className="login-btn">
+                            <button type="submit" className="login-btn w-100">
                                 <i className="bi bi-save me-2"></i> Save Changes
                             </button>
                         </div>

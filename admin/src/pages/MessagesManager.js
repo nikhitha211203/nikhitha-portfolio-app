@@ -64,7 +64,7 @@ const MessagesManager = () => {
           <div className="row g-4">
             {messages.map((msg) => (
               <div key={msg._id} className="col-lg-6">
-                <div className={`glass-card p-4 h-100 d-flex flex-column ${msg.isRead ? 'opacity-75' : ''}`} style={{ borderTop: `4px solid ${msg.isRead ? 'gray' : 'var(--primary)'}`, transition: 'transform 0.2s' }}>
+                <div className={`glass-card p-4 h-100 d-flex flex-column ${msg.isRead ? 'opacity-75' : ''}`} style={{ borderTop: `4px solid ${msg.isRead ? 'gray' : 'var(--primary)'}` }}>
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <h5 className="mb-0 text-white">{msg.name}</h5>
                     <small className="text-muted">{new Date(msg.createdAt).toLocaleDateString()}</small>
@@ -79,11 +79,11 @@ const MessagesManager = () => {
                   </div>
                   <div className="d-flex justify-content-end gap-2 mt-auto pt-3 border-top" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
                     {!msg.isRead && (
-                      <button className="btn btn-sm btn-outline-primary" onClick={() => markAsRead(msg._id)}>
+                      <button className="btn btn-sm btn-glass-primary text-primary border-primary bg-transparent" onClick={() => markAsRead(msg._id)}>
                         <i className="bi bi-check2-all me-1"></i> Mark Read
                       </button>
                     )}
-                    <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(msg._id)}>
+                    <button className="btn btn-sm btn-glass-danger" onClick={() => handleDelete(msg._id)}>
                       <i className="bi bi-trash me-1"></i> Delete
                     </button>
                   </div>

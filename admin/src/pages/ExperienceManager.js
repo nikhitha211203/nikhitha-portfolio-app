@@ -162,17 +162,17 @@ const ExperienceManager = () => {
 
                     <div className="d-flex flex-column gap-3">
                         {experiences.map(exp => (
-                            <div key={exp._id} className="glass-card p-3 position-relative" style={{ borderLeft: '4px solid var(--secondary)' }}>
+                            <div key={exp._id} className="glass-card p-4 position-relative hover-scale transition-all" style={{ borderLeft: '4px solid var(--secondary)' }}>
                                 <div className="d-flex justify-content-between align-items-start">
                                     <div>
-                                        <h5 className="mb-1">{exp.jobTitle}</h5>
+                                        <h5 className="mb-1 text-white">{exp.jobTitle}</h5>
                                         <p className="text-primary mb-1 small">{exp.company}</p>
                                         <small className="text-muted d-block mb-2">{exp.duration}</small>
                                         <p className="text-light small mb-0 opacity-75">{exp.description}</p>
                                     </div>
                                     <div className="d-flex flex-column gap-2 ms-3">
-                                        <button onClick={() => handleEditExp(exp)} className="btn btn-sm btn-outline-light border-0"><i className="bi bi-pencil-square"></i></button>
-                                        <button onClick={() => deleteExp(exp._id)} className="btn btn-sm btn-outline-light border-0 text-danger"><i className="bi bi-trash"></i></button>
+                                        <button onClick={() => handleEditExp(exp)} className="btn-icon-edit"><i className="bi bi-pencil-fill"></i></button>
+                                        <button onClick={() => deleteExp(exp._id)} className="btn-icon-delete"><i className="bi bi-trash-fill"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -209,17 +209,17 @@ const ExperienceManager = () => {
 
                     <div className="d-flex flex-column gap-3">
                         {education.map(edu => (
-                            <div key={edu._id} className="glass-card p-3 position-relative" style={{ borderLeft: '4px solid var(--accent)' }}>
+                            <div key={edu._id} className="glass-card p-4 position-relative hover-scale transition-all" style={{ borderLeft: '4px solid var(--accent)' }}>
                                 <div className="d-flex justify-content-between align-items-start">
                                     <div>
-                                        <h5 className="mb-1">{edu.degree}</h5>
+                                        <h5 className="mb-1 text-white">{edu.degree}</h5>
                                         <p className="text-accent mb-1 small" style={{ color: 'var(--accent)' }}>{edu.school}</p>
                                         <small className="text-muted d-block mb-2">{edu.duration}</small>
                                         <p className="text-light small mb-0 opacity-75">{edu.description}</p>
                                     </div>
                                     <div className="d-flex flex-column gap-2 ms-3">
-                                        <button onClick={() => handleEditEdu(edu)} className="btn btn-sm btn-outline-light border-0"><i className="bi bi-pencil-square"></i></button>
-                                        <button onClick={() => deleteEdu(edu._id)} className="btn btn-sm btn-outline-light border-0 text-danger"><i className="bi bi-trash"></i></button>
+                                        <button onClick={() => handleEditEdu(edu)} className="btn-icon-edit"><i className="bi bi-pencil-fill"></i></button>
+                                        <button onClick={() => deleteEdu(edu._id)} className="btn-icon-delete"><i className="bi bi-trash-fill"></i></button>
                                     </div>
                                 </div>
                             </div>
