@@ -2,25 +2,28 @@
 .App {
   display: flex;
   min-height: 100vh;
+  background-color: var(--bg-dark);
   background-image:
-    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.25) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.25) 0%, transparent 40%);
+    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 40%);
   overflow-x: hidden;
-  /* Prevent horizontal scroll */
 }
 
 .main-content {
   flex: 1;
-  padding: 2rem;
-  margin-left: 260px;
-  width: calc(100% - 260px);
-  transition: all 0.3s ease;
-  /* Smooth transition */
+  padding: 3rem;
+  margin-left: 280px;
+  /* Fixed width matching sidebar */
+  width: calc(100% - 280px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
 }
 
 .main-content.expanded {
   margin-left: 0;
   width: 100%;
+  padding: 2rem;
+  /* Less padding on mobile/expanded */
 }
 
 /* Navbar / Sidebar */
@@ -29,12 +32,17 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 260px;
+  width: 280px;
+  /* Slightly wider for better breathing room */
   display: flex;
   flex-direction: column;
   padding: 2rem;
   z-index: 1000;
-  transition: transform 0.3s ease;
+  background: rgba(15, 23, 42, 0.6);
+  /* Semi-transparent dark */
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navbar.collapsed {
@@ -43,22 +51,32 @@
 
 .toggle-btn {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  top: 1.5rem;
+  left: 1.5rem;
   z-index: 1001;
-  background: var(--primary);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  padding: 0.5rem 1rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: left 0.3s ease;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.05);
 }
 
 .toggle-btn.shifted {
-  left: 280px;
-  /* Move button when sidebar is open if desired, or keep fixed */
+  left: 300px;
+  /* 280px width + 20px gap */
 }
 
 /* Nav Brand */
