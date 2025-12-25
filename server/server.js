@@ -47,6 +47,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
+      "http://localhost:3001",
+      "http://localhost:3002",
       "https://nikhitha-admin.vercel.app",
       "https://portfolio-nikhitha-kappa.vercel.app",
       "https://nikhitha-portfolio-app.vercel.app"
