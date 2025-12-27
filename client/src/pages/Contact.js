@@ -16,7 +16,7 @@ function Contact() {
     setStatus("Sending...");
     setStatusType("info");
     try {
-      await axios.post("/api/contact", formData);
+      await axios.post("https://nikhitha-portfolio-app.onrender.com/", formData);
       setStatus("Message sent successfully! I'll get back to you soon.");
       setStatusType("success");
       setFormData({ name: "", email: "", message: "" });
