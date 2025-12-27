@@ -11,20 +11,27 @@ function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("Sending...");
-    setStatusType("info");
-    try {
-      await axios.post("https://nikhitha-portfolio-app.onrender.com/", formData);
-      setStatus("Message sent successfully! I'll get back to you soon.");
-      setStatusType("success");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (err) {
-      setStatus("Error sending message. Please try again.");
-      setStatusType("error");
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setStatus("Sending...");
+  setStatusType("info");
+
+  try {
+    await axios.post(
+      "https://nikhitha-portfolio-app.onrender.com/api/contact",
+      formData
+    );
+
+    setStatus("Message sent successfully! I'll get back to you soon.");
+    setStatusType("success");
+    setFormData({ name: "", email: "", message: "" });
+  } catch (err) {
+    console.error(err);
+    setStatus("Error sending message. Please try again.");
+    setStatusType("error");
+  }
+};
+
 
   return (
     <div className="contact-container py-5 mt-5 d-flex align-items-center">
